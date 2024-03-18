@@ -7,7 +7,7 @@
 #include <random>
 #include <algorithm>
 #include <deque>
-//ok
+//ok2
 
 // Fonction pour cr�er le fichier .txt avec les cartes m�lang�es
 #include <iostream>
