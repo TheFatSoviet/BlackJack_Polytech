@@ -1,8 +1,7 @@
-
 #include "Melange_Cartes.cpp"
 #include "Retire_Cartes.cpp"
 #include "Rajout_Cartes.cpp"
-
+#include "Calcule_Score.cpp"
 
 int main()
 {
@@ -22,9 +21,6 @@ int main()
         std::cout << "Fichier sabot.txt cree avec succes." << std::endl;
     }
 
-
-
-
     int NB_Cartes_a_retirer;
     std::cout << "Entrez le nombre de cartes a retirer : ";
     std::cin >> NB_Cartes_a_retirer;
@@ -35,6 +31,16 @@ int main()
 
     std::vector<std::string> cartes_a_ajouter = {"1", "2", "3"};
     Rajout_Cartes(cartes_a_ajouter);
+
+////////////////////////////////////////////////////////////
+
+    std::vector<std::string> cartes = {"1", "5","8"};
+
+    // Calcul du score pour cet ensemble de cartes
+    int score = Calcule_Score(cartes);
+
+    // Affichage du score
+    std::cout << "Le score est: " << score << std::endl;
 
 
 

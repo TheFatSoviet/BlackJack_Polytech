@@ -3,7 +3,6 @@
 #include <vector>
 #include <string>
 
-
 void Rajout_Cartes(const std::vector<std::string>& cartes_a_ajouter) {
     std::string filename = "Sabot.txt";
     std::ofstream fileOut(filename, std::ios::app); // Ouvre le fichier en mode append
@@ -25,5 +24,5 @@ void Rajout_Cartes(const std::vector<std::string>& cartes_a_ajouter) {
     }
 
     fileOut.close(); // Ferme le fichier après l'ajout
-    std::cout << cartes_a_ajouter.size() << " cartes ajoutées avec succès à la fin du fichier." << std::endl;
+    std::cout << cartes_a_ajouter.size() << " cartes ajoutees avec succes à la fin du fichie." << std::endl;
 }
