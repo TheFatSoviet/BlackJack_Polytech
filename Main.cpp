@@ -2,10 +2,31 @@
 #include "Retire_Cartes.cpp"
 #include "Rajout_Cartes.cpp"
 #include "Calcule_Score.cpp"
+#include "Joueur.cpp"
 
 //fhefguy
 int main()
 {
+
+  Joueur joueur1;
+// Supposons que `joueur1` a déjà été initialisé avec des valeurs
+
+// Changement du nom de `joueur1` en "Alice"
+joueur1.creation_joueur("Alice");
+
+// Affichage pour vérifier le changement de nom
+std::cout << "Le nouveau nom du joueur est : " << joueur1.nom << std::endl;
+
+
+
+
+
+
+
+
+
+
+
     char Nombre_Joueurs;
 
     std::cout << "Entrez le nombre de joueurs (entre 1 et 8) : ";
