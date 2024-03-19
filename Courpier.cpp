@@ -1,11 +1,10 @@
 
-
+#include "Joueur.cpp"
 
 class courpier{
 public:
-    int score_in_game;
-    bool pioche(){
-        if (this->score_in_game > 17){
+    bool pioche(int score_in_game){
+        if (score_in_game > 17){
             return 0;
         }
         else{
