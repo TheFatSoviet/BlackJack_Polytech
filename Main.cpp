@@ -12,7 +12,7 @@ int main()
 
     bool SUCCES___Melange_Cartes = Melange_Cartes(Nombre_Joueurs);
 
-    if (SUCCES___Melange_Cartes == 0)
+    if (SUCCES___Melange_Cartes == 0)   // 0 et -1 erreur
     {
         std::cout << "La valeur n'est pas entre 1 et 8." << std::endl;
     }

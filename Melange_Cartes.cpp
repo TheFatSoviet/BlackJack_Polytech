@@ -18,7 +18,8 @@ int Melange_Cartes(char value) {
     std::vector<char> Cartes;
 
     // Multiplication du jeu de cartes par le nombre de joueurs
-    for (int i = 0; i < (value - '0'); ++i) {
+    for (int i = 0; i < (value - '0'); ++i)
+    {
         Cartes.insert(Cartes.end(), Sabot_Type.begin(), Sabot_Type.end());
     }
 
@@ -33,13 +34,15 @@ int Melange_Cartes(char value) {
     std::ofstream file(filename);
 
     // Vérification que le fichier est bien ouvert
-    if (!file.is_open()) {
+    if (!file.is_open())
+    {
         std::cerr << "Erreur : impossible d'ouvrir le fichier." << std::endl;
         return -1;
     }
 
     // Écriture des cartes dans le fichier
-    for (char card : Cartes) {
+    for (char card : Cartes)
+    {
         file << card << ",";
     }
 
