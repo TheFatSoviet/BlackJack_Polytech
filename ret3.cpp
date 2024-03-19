@@ -1,11 +1,7 @@
-#include <iostream>
-#include <stdlib.h>
-#include "Joueur.cpp"
-
 using namespace std;
 
 
-class ret3 : public Joueur
+class ret3
 {
 public:
 
@@ -24,6 +20,6 @@ bool pioche_ret3()
       i=0;
       return false;
     }
-    
+
 }
 };

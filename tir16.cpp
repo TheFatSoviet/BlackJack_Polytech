@@ -1,11 +1,7 @@
-#include <iostream>
-#include <stdlib.h>
-#include "Joueur.cpp"
-
 using namespace std;
 
 
-class tir16 : public Joueur
+class tir16
 {
 public:
 

@@ -1,12 +1,14 @@
-#include <iostream>
 #include <cstring>
+#include <iostream>
 #include <stdlib.h>
-#include <vector>
-#include <string>
+#include "tir16.cpp"
+#include "ret3.cpp"
+#include "rand.cpp"
+#include "random"
 
 using namespace std;
 
-class Joueur
+class Joueur : public tir16, public ret3, public rand1
 {
 public:
     char nom[20];
