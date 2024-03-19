@@ -1,6 +1,5 @@
 #include <vector>
-#include <string>
-
+#include <string>// tets
 int Calcule_Score(const std::vector<std::string>& cartes)
 {
     int score = 0;
