@@ -1,6 +1,10 @@
-#include "Joueur.cpp"
+#include <iostream>
+#include <stdlib.h>
 
-class Humain:public Joueur{
+using namespace std;
+
+class Humain
+{
 public:
 
   bool pioche_humain(){

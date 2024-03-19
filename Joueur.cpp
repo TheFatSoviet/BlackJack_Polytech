@@ -5,10 +5,11 @@
 #include "ret3.cpp"
 #include "rand.cpp"
 #include "random"
+#include "Humain.cpp"
 
 using namespace std;
 
-class Joueur : public tir16, public ret3, public rand1
+class Joueur : public tir16, public ret3, public rand1, public Humain
 {
 public:
     char nom[20];
