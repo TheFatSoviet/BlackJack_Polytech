@@ -7,7 +7,6 @@
 #include <random>
 #include <algorithm>
 #include <deque>
-//ok2
 
 // Fonction pour cr�er le fichier .txt avec les cartes m�lang�es
 #include <iostream>
@@ -21,7 +20,7 @@ int Melange_Cartes(char value) {
         return 0; // Si la valeur n'est pas entre 1 et 8, renvoyer 0
 
     // Création d'un jeu de cartes
-    std::vector<char> Sabot_Type = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '1', '0', 'V', 'D', 'R'};
+    std::vector<char> Sabot_Type = {'1', '2', '3', '4', '5', '6', '7', '8', '9', 'V', 'D', 'R'};
     std::vector<char> Cartes;
 
     // Multiplication du jeu de cartes par le nombre de joueurs
@@ -121,6 +120,44 @@ void RetireCartes(int nombre_cartes) {
 
 
 
+
+
+void rajout_carte(const std::vector<std::string>& cartes_a_ajouter) {
+    std::string filename = "Sabot.txt";
+    std::ofstream fileOut(filename, std::ios::app); // Ouvre le fichier en mode append
+
+    if (!fileOut.is_open()) {
+        std::cerr << "Erreur : impossible d'ouvrir le fichier pour l'ajout." << std::endl;
+        return;
+    }
+
+    if (!cartes_a_ajouter.empty()) {
+        fileOut << ","; // Ajoute une virgule avant de commencer l'ajout des nouvelles cartes
+    }
+
+    for (size_t i = 0; i < cartes_a_ajouter.size(); ++i) {
+        fileOut << cartes_a_ajouter[i];
+        if (i != cartes_a_ajouter.size() - 1) {
+            fileOut << ","; // Ajoute une virgule entre les cartes, sauf après la dernière
+        }
+    }
+
+    fileOut.close(); // Ferme le fichier après l'ajout
+    std::cout << cartes_a_ajouter.size() << " cartes ajoutées avec succès à la fin du fichier." << std::endl;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 int main()
 {
     char Nombre_Joueurs;
@@ -150,6 +187,16 @@ int main()
 
     // Exemple d'utilisation de la fonction RetireCartes
     RetireCartes(NB_Cartes_a_retirer);
+
+
+
+
+
+
+    std::vector<std::string> cartes_a_ajouter = {"1", "2", "3"};
+    rajout_carte(cartes_a_ajouter);
+
+
 
     return 0;
 }
