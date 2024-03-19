@@ -1,89 +1,160 @@
 #include "Melange_Cartes.cpp"
 #include "Retire_Cartes.cpp"
+#include "Distribuer_Cartes.cpp"
 #include "Rajout_Cartes.cpp"
 #include "Calcule_Score.cpp"
 #include "Joueur.cpp"
 
-//fhefguy
+
+
+
+
+void Distribuer_Cartes(std::vector<Joueur>& joueurs)
+{
+    std::ifstream fileIn("Sabot.txt");
+    std::string contenu, carte;
+    std::vector<std::string> cartes;
+
+    if (fileIn.is_open())
+    {
+        getline(fileIn, contenu);
+        fileIn.close();
+
+        std::stringstream ss(contenu);
+
+        // Lire toutes les cartes dans le vecteur
+        while (std::getline(ss, carte, ','))
+        {
+            if (!carte.empty())
+            { // Vérifier que la chaîne n'est pas vide
+                cartes.push_back(carte);
+            }
+        }
+    }
+
+    // Attribuer deux cartes à chaque joueur et les retirer de la liste
+    for (auto& joueur : joueurs)
+    {
+        if (cartes.size() >= 2)
+        {
+            joueur.cartes.push_back(cartes[0]);
+            joueur.cartes.push_back(cartes[1]);
+            cartes.erase(cartes.begin(), cartes.begin() + 2); // Retirer les deux premières cartes
+        }
+    }
+
+    // Mettre à jour le fichier avec les cartes restantes
+    std::ofstream fileOut("Sabot.txt");
+    if (fileOut.is_open())
+    {
+        for (size_t i = 0; i < cartes.size(); ++i)
+        {
+            fileOut << cartes[i];
+            if (i != cartes.size() - 1)
+            {
+                fileOut << ",";
+            }
+        }
+        fileOut.close();
+    }
+}
+
+
+
+
+
+
+
+
+//=============================================
 int main()
 {
-  char Nombre_Joueurs_char=0;
-  int Nombre_Joueurs=0;
+   char Nombre_Joueurs_char = 0;
+   int Nombre_Joueurs_humains = 0;
+   std::vector<Joueur> joueurs;
+
+while (Nombre_Joueurs_humains < 1 || Nombre_Joueurs_humains > 7)
+{
+   std::cout << "Entrez le nombre de joueurs humains a creer (entre 1 et 7) : ";
+   std::cin >> Nombre_Joueurs_char;
+   std::cin.ignore(); // Ignorez le retour à la ligne restant dans le buffer d'entrée
+
+   // Convertissez le char en int
+   Nombre_Joueurs_humains = Nombre_Joueurs_char - '0';
+
+   // Vérifiez si le nombre de joueurs est valide
+   if (Nombre_Joueurs_humains < 1 || Nombre_Joueurs_humains > 7) {
+       std::cerr << "Le nombre de joueurs doit etre entre 1 et 7." << std::endl;
+      // return 1;
+   }
+}
+
+  Melange_Cartes(Nombre_Joueurs_char+1);
 
 
-  while (Nombre_Joueurs < 1 || Nombre_Joueurs > 8)
+   // Initialisez le vecteur de joueurs avec le dealer plus les joueurs humains
+   joueurs.resize(Nombre_Joueurs_humains + 1);
+
+   // Définissez le nom du dealer
+   strcpy(joueurs[0].nom, "Dealer");
+
+   // Obtenez les noms des joueurs humains
+   for (int i = 1; i <= Nombre_Joueurs_humains; ++i) {
+       std::cout << "Entrez le nom pour le joueur " << i << ": ";
+       std::string nomTemp;
+       std::getline(std::cin, nomTemp);
+
+       if (nomTemp.length() >= sizeof(joueurs[i].nom)) {
+           std::cerr << "Erreur : le nom est trop long. Il sera tronque." << std::endl;
+           nomTemp.resize(sizeof(joueurs[i].nom) - 1);
+       }
+
+       strcpy(joueurs[i].nom, nomTemp.c_str());
+   }
+
+   // Affichez tous les noms des joueurs
+   for (size_t i = 0; i < joueurs.size(); ++i) {
+       std::cout << "Joueur " << i << " : " << joueurs[i].nom << std::endl;
+   }
+
+ // Distribution des cartes
+ Distribuer_Cartes(joueurs);
+
+ // Afficher les cartes de chaque joueur
+
+  for (size_t i = 0; i < joueurs.size(); ++i)
   {
-    std::cout << "Entrez le nombre de joueurs a creer (entre 1 et 8) : ";
-    std::cin >> Nombre_Joueurs_char;
-    std::cin.ignore(); // "saut de ligne"
-
-    // Convertir char en int
-    Nombre_Joueurs = Nombre_Joueurs_char - '0';
-
-    // Vérification que le nombre est dans la plage [1, 8]
-    if (Nombre_Joueurs < 1 || Nombre_Joueurs > 8)
-    {
-        std::cerr << "Le nombre de joueurs doit etre entre 1 et 8." << std::endl;
-    }
-  }
-//-------------------
-
-  std::vector<Joueur> joueurs(Nombre_Joueurs);
-
-  for (int i = 0; i < Nombre_Joueurs; ++i)
-  {
-      std::cout << "Entrez le nom pour le joueur " << i + 1 << ": ";
-      std::string nomTemp;
-      std::getline(std::cin, nomTemp); // Lire le nom complet, y compris les espaces
-
-      // Assurer que le nom n'est pas trop long pour le tableau dans Joueur
-      if (nomTemp.length() >= sizeof(joueurs[i].nom))
+      std::cout << "Joueur " << i << " (" << joueurs[i].nom << ") a les cartes: ";
+      for (const auto& carte : joueurs[i].cartes)
       {
-          std::cerr << "Erreur : le nom est trop long. Il sera tronque." << std::endl;
-          nomTemp.resize(sizeof(joueurs[i].nom) - 1); // Réduire la taille pour qu'elle rentre
+          std::cout << carte << " ";
       }
-
-      // Copier le nom dans la structure du joueur
-      strcpy(joueurs[i].nom, nomTemp.c_str()); //copie string vers string(dest , src)
+      std::cout << std::endl;
   }
 
-  // Affichage pour vérification
-  for (int i = 0; i < Nombre_Joueurs; ++i)
-    {
-      std::cout << "Nom du joueur " << i + 1 << ": " << joueurs[i].nom << std::endl;
-    }
 
-    bool SUCCES___Melange_Cartes = Melange_Cartes(Nombre_Joueurs_char);
 
-    if (SUCCES___Melange_Cartes == 0)   // 0 et -1 erreur
-    {
-        std::cout << "La valeur n'est pas entre 1 et 8." << std::endl;
-    }
-    else if (SUCCES___Melange_Cartes == 1)
-    {
-        std::cout << "Fichier sabot.txt cree avec succes." << std::endl;
-    }
 
-    int NB_Cartes_a_retirer;
-    std::cout << "Entrez le nombre de cartes a retirer : ";
-    std::cin >> NB_Cartes_a_retirer;
+//  int NB_Cartes_a_retirer;
+//    std::cout << "Entrez le nombre de cartes a retirer : ";
+//    std::cin >> NB_Cartes_a_retirer;
 
     // Exemple d'utilisation de la fonction RetireCartes
-    Retire_Cartes(NB_Cartes_a_retirer);
+//    Retire_Cartes(NB_Cartes_a_retirer);
 
 
-    std::vector<std::string> cartes_a_ajouter = {"1", "2", "3"};
-    Rajout_Cartes(cartes_a_ajouter);
+//    std::vector<std::string> cartes_a_ajouter = {"1", "2", "3"};
+//    Rajout_Cartes(cartes_a_ajouter);
 
 ////////////////////////////////////////////////////////////
 
-    std::vector<std::string> cartes = {"1", "5","8"};
+  //  std::vector<std::string> cartes = {"1", "5","8"};
 
     // Calcul du score pour cet ensemble de cartes
-    int score = Calcule_Score(cartes);
+//    int score = Calcule_Score(cartes);
 
     // Affichage du score
-    std::cout << "Le score est: " << score << std::endl;
+  //  std::cout << "Le score est: " << score << std::endl;
 
 
 

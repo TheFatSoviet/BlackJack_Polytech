@@ -1,6 +1,8 @@
 #include <iostream>
 #include <cstring>
 #include <stdlib.h>
+#include <vector>
+#include <string>
 
 using namespace std;
 
@@ -13,15 +15,16 @@ public:
     int nb_partie_joue;
     int jeton_possede;
     int jeton_mise;
+    std::vector<std::string> cartes; // Pour stocker les cartes du joueur
 
     Joueur() {
-    nom[0] = '\0'; // Initialise le nom avec une chaîne vide
-    type_joueur[0] = '\0'; // Initialise le type de joueur avec une chaîne vide
-    score_in_game = 0;
-    nb_partie_joue = 0;
-    jeton_possede = 0;
-    jeton_mise = 0;
-  }//
+        nom[0] = '\0'; // Initialise le nom avec une chaîne vide
+        type_joueur[0] = '\0'; // Initialise le type de joueur avec une chaîne vide
+        score_in_game = 0;
+        nb_partie_joue = 0;
+        jeton_possede = 0;
+        jeton_mise = 0;
+    }
 
 
     void creation_joueur(const char* nouveau_nom)
