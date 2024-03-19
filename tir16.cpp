@@ -1,15 +1,15 @@
 #include <iostream>
 #include <stdlib.h>
-#include "Type.cpp"
+#include "Joueur.cpp"
 
 using namespace std;
 
 
-class tir16 : public type
+class tir16 : public Joueur
 {
 public:
 
-bool pioche(int score)
+bool pioche_tir16(int score)
 {
     if (score < 17)
     {
@@ -20,5 +20,4 @@ bool pioche(int score)
         return false;
     }
 }
-
 };
