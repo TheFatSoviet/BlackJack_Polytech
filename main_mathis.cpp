@@ -1,12 +1,21 @@
-#include "Joueur.cpp"
+
+#include "tir16.cpp"
 
 
 int main()
 {
-    int nb_joueur;
+    int score=15;
+    bool test;
+    test= tir16.pioche(score);
 
-    printf("Saisir le nombre de joueur");
-    scanf("%d",&nb_joueur);
+    cout<<tesr<<endl;
+
+
+
+
+
+
+
 
     return 0;
 }
