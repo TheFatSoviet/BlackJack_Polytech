@@ -1,7 +1,7 @@
 
 #include "Joueur.cpp"
 
-class courpier{
+class courpier:public Joueur{
 public:
     bool pioche_courpier(int score_in_game);
 };

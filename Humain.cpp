@@ -1,6 +1,6 @@
 #include "Joueur.cpp"
 
-class Huamin{
+class Humain:public Joueur{
 public:
     bool pioche_humain();
 };
