@@ -2,20 +2,25 @@
 
 class Humain:public Joueur{
 public:
-    bool pioche_humain();
+
+  bool pioche_humain(){
+      char oui_non;
+      int temp=0;
+      while (temp==0){
+        cout << "Voulez vous tier une carte ? (o/n)" << endl;
+        cin >> oui_non;
+        if (oui_non == 'o'){
+            return true;
+            temp =1;
+        }
+        else if(oui_non == 'n'){
+            return false;
+            temp =1;
+        }
+        else{
+          temp =0;
+        }
+      }
+  }
+
 };
-
-
-using namespace std;
-
-bool pioche_h(){
-    char oui_non;
-    cout << "Voulez vous tier une carte ? (o/n)" << endl;
-    cin >> oui_non;
-    if (oui_non == 'o'){
-        return 0;
-    }
-    else{
-        return 1;
-    }
-}
