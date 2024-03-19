@@ -37,7 +37,7 @@ void Retire_Cartes(int nombre_cartes)
             std::ofstream fileOut(filename);
             if (!fileOut.is_open())
             {
-                std::cerr << "Erreur lors de la réouverture du fichier pour écriture." << std::endl;
+                std::cerr << "Erreur lors de la reouverture du fichier pour ecriture." << std::endl;
                 return;
             }
 
@@ -52,7 +52,7 @@ void Retire_Cartes(int nombre_cartes)
             }
 
             fileOut.close();
-            std::cout << nombre_cartes << " cartes retirées avec succès." << std::endl;
+            std::cout << nombre_cartes << " cartes retirees avec succes." << std::endl;
         }
         else
         {

@@ -7,66 +7,53 @@
 //fhefguy
 int main()
 {
-
-  int X;
-     std::cout << "Entrez le nombre de joueurs à créer : ";
-     std::cin >> X;
-     std::cin.ignore(); // Ignorer le caractère de nouvelle ligne après le nombre
-
-     if (X < 1) {
-         std::cerr << "Le nombre de joueurs doit être au moins 1." << std::endl;
-         return 1;
-     }
-
-     std::vector<Joueur> joueurs(X);
-
-     for (int i = 0; i < X; ++i) {
-         std::cout << "Entrez le nom pour le joueur " << i + 1 << ": ";
-         std::string nomTemp;
-         std::getline(std::cin, nomTemp); // Lire le nom complet, y compris les espaces
-
-         // Assurer que le nom n'est pas trop long pour le tableau dans Joueur
-         if (nomTemp.length() >= sizeof(joueurs[i].nom)) {
-             std::cerr << "Erreur : le nom est trop long. Il sera tronqué." << std::endl;
-             nomTemp.resize(sizeof(joueurs[i].nom) - 1); // Réduire la taille pour qu'elle rentre
-         }
-
-         // Copier le nom dans la structure du joueur
-         strcpy(joueurs[i].nom, nomTemp.c_str());
-     }
-
-     // Affichage pour vérification
-     for (int i = 0; i < X; ++i) {
-         std::cout << "Nom du joueur " << i + 1 << ": " << joueurs[i].nom << std::endl;
-     }
+  char Nombre_Joueurs_char=0;
+  int Nombre_Joueurs=0;
 
 
+  while (Nombre_Joueurs < 1 || Nombre_Joueurs > 8)
+  {
+    std::cout << "Entrez le nombre de joueurs a creer (entre 1 et 8) : ";
+    std::cin >> Nombre_Joueurs_char;
+    std::cin.ignore(); // "saut de ligne"
 
+    // Convertir char en int
+    Nombre_Joueurs = Nombre_Joueurs_char - '0';
 
+    // Vérification que le nombre est dans la plage [1, 8]
+    if (Nombre_Joueurs < 1 || Nombre_Joueurs > 8)
+    {
+        std::cerr << "Le nombre de joueurs doit etre entre 1 et 8." << std::endl;
+    }
+  }
+//-------------------
 
+  std::vector<Joueur> joueurs(Nombre_Joueurs);
 
+  for (int i = 0; i < Nombre_Joueurs; ++i)
+  {
+      std::cout << "Entrez le nom pour le joueur " << i + 1 << ": ";
+      std::string nomTemp;
+      std::getline(std::cin, nomTemp); // Lire le nom complet, y compris les espaces
 
+      // Assurer que le nom n'est pas trop long pour le tableau dans Joueur
+      if (nomTemp.length() >= sizeof(joueurs[i].nom))
+      {
+          std::cerr << "Erreur : le nom est trop long. Il sera tronque." << std::endl;
+          nomTemp.resize(sizeof(joueurs[i].nom) - 1); // Réduire la taille pour qu'elle rentre
+      }
 
+      // Copier le nom dans la structure du joueur
+      strcpy(joueurs[i].nom, nomTemp.c_str()); //copie string vers string(dest , src)
+  }
 
-    char Nombre_Joueurs;
+  // Affichage pour vérification
+  for (int i = 0; i < Nombre_Joueurs; ++i)
+    {
+      std::cout << "Nom du joueur " << i + 1 << ": " << joueurs[i].nom << std::endl;
+    }
 
-    std::cout << "Entrez le nombre de joueurs (entre 1 et 8) : ";
-    std::cin >> Nombre_Joueurs;
-
-
-    //joueur1.creation_joueur("Alice");
-
-    // Affichage pour vérifier le changement de nom
-    //std::cout << "Le nouveau nom du joueur est : " << joueur1.nom << std::endl;
-
-
-
-
-
-
-
-
-    bool SUCCES___Melange_Cartes = Melange_Cartes(Nombre_Joueurs);
+    bool SUCCES___Melange_Cartes = Melange_Cartes(Nombre_Joueurs_char);
 
     if (SUCCES___Melange_Cartes == 0)   // 0 et -1 erreur
     {

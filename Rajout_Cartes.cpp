@@ -29,5 +29,5 @@ void Rajout_Cartes(const std::vector<std::string>& cartes_a_ajouter)
     }
 
     fileOut.close(); // Ferme le fichier après l'ajout
-    std::cout << cartes_a_ajouter.size() << " cartes ajoutees avec succes à la fin du fichie." << std::endl;
+    std::cout << cartes_a_ajouter.size() << " cartes ajoutees avec succes a la fin du fichier." << std::endl;
 }

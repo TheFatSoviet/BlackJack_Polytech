@@ -24,7 +24,7 @@ int Melange_Cartes(char value) {
     }
 
     // Utiliser srand pour initialiser le générateur de nombres aléatoires avec le temps actuel
-    std::srand(static_cast<unsigned int>(std::time(0))); 
+    std::srand(static_cast<unsigned int>(std::time(0)));
     std::random_shuffle(Cartes.begin(), Cartes.end());
 
     // Création du nom du fichier
