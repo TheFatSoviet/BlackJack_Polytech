@@ -8,16 +8,37 @@
 int main()
 {
 
-  Joueur joueur1;
-// Supposons que `joueur1` a déjà été initialisé avec des valeurs
+  int X;
+     std::cout << "Entrez le nombre de joueurs à créer : ";
+     std::cin >> X;
+     std::cin.ignore(); // Ignorer le caractère de nouvelle ligne après le nombre
 
-// Changement du nom de `joueur1` en "Alice"
-joueur1.creation_joueur("Alice");
+     if (X < 1) {
+         std::cerr << "Le nombre de joueurs doit être au moins 1." << std::endl;
+         return 1;
+     }
 
-// Affichage pour vérifier le changement de nom
-std::cout << "Le nouveau nom du joueur est : " << joueur1.nom << std::endl;
+     std::vector<Joueur> joueurs(X);
 
+     for (int i = 0; i < X; ++i) {
+         std::cout << "Entrez le nom pour le joueur " << i + 1 << ": ";
+         std::string nomTemp;
+         std::getline(std::cin, nomTemp); // Lire le nom complet, y compris les espaces
 
+         // Assurer que le nom n'est pas trop long pour le tableau dans Joueur
+         if (nomTemp.length() >= sizeof(joueurs[i].nom)) {
+             std::cerr << "Erreur : le nom est trop long. Il sera tronqué." << std::endl;
+             nomTemp.resize(sizeof(joueurs[i].nom) - 1); // Réduire la taille pour qu'elle rentre
+         }
+
+         // Copier le nom dans la structure du joueur
+         strcpy(joueurs[i].nom, nomTemp.c_str());
+     }
+
+     // Affichage pour vérification
+     for (int i = 0; i < X; ++i) {
+         std::cout << "Nom du joueur " << i + 1 << ": " << joueurs[i].nom << std::endl;
+     }
 
 
 
@@ -31,6 +52,19 @@ std::cout << "Le nouveau nom du joueur est : " << joueur1.nom << std::endl;
 
     std::cout << "Entrez le nombre de joueurs (entre 1 et 8) : ";
     std::cin >> Nombre_Joueurs;
+
+
+    //joueur1.creation_joueur("Alice");
+
+    // Affichage pour vérifier le changement de nom
+    //std::cout << "Le nouveau nom du joueur est : " << joueur1.nom << std::endl;
+
+
+
+
+
+
+
 
     bool SUCCES___Melange_Cartes = Melange_Cartes(Nombre_Joueurs);
 

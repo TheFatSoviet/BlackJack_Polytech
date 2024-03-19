@@ -17,7 +17,6 @@ public:
 
     void creation_joueur(const char* nouveau_nom)
     {
-        // Assurez-vous que le nouveau nom n'est pas trop long pour le tableau
         size_t longueur_nom = strlen(nouveau_nom);
         if (longueur_nom >= sizeof(nom)) // sizeof(nom) donne la taille du tableau `nom`
         {
@@ -25,7 +24,6 @@ public:
             return;
         }
 
-        // Copie le nouveau nom dans la variable `nom` du joueur
         strcpy(nom, nouveau_nom);
     }
 
