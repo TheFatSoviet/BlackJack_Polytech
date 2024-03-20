@@ -1,3 +1,5 @@
+//Ruben SARGSYAN
+//commentaires générer par ia
 
 #include "Retire_Cartes.cpp"
 #include "Distribuer_Cartes.cpp"
@@ -14,86 +16,75 @@
 #include "Afficher_Cartes_Joueur.cpp"
 #include "tir16.cpp"
 
-
 #include <iostream>
 #include <fstream>
 #include <vector>
 #include <algorithm>
 #include <ctime>
 
-
-
-
-//=============================================
+// Le point d'entrée principal du programme.
 int main()
 {
+   // Variables pour stocker le nombre de joueurs sous différentes formes.
    char Nombre_Joueurs_char = 0;
    int Nombre_Joueurs = 0;
+   // Vecteur pour conserver les joueurs, y compris le dealer.
    std::vector<Joueur> joueurs;
 
-while (Nombre_Joueurs < 1 || Nombre_Joueurs > 7)
-{
-   std::cout << "Entrez le nombre de joueurs humains a creer (entre 1 et 7) : ";
-   std::cin >> Nombre_Joueurs_char;
-   std::cin.ignore(); // Ignorez le retour à la ligne restant dans le buffer d'entrée
-
-   // Convertissez le char en int
-   Nombre_Joueurs = Nombre_Joueurs_char - '0';
-
-   // Vérifiez si le nombre de joueurs est valide
-   if (Nombre_Joueurs < 1 || Nombre_Joueurs > 7)
+   // Boucle pour s'assurer que le nombre de joueurs est dans la plage valide.
+   while (Nombre_Joueurs < 1 || Nombre_Joueurs > 7)
    {
-       std::cerr << "Le nombre de joueurs doit etre entre 1 et 7." << std::endl;
-      // return 1;
+      std::cout << "Entrez le nombre de joueurs (entre 1 et 7) : ";
+      std::cin >> Nombre_Joueurs_char;
+      std::cin.ignore(); // Évite les problèmes de buffer en ignorant le retour à la ligne.
+
+      // Conversion de char à int pour obtenir le nombre réel de joueurs.
+      Nombre_Joueurs = Nombre_Joueurs_char - '0';
+
+      // Vérification de la validité de l'entrée.
+      if (Nombre_Joueurs < 1 || Nombre_Joueurs > 7)
+      {
+          std::cerr << "Le nombre de joueurs doit etre entre 1 et 7." << std::endl;
+         // return 1; // Cette ligne est commentée mais peut être utilisée pour quitter si nécessaire.
+      }
    }
-}
 
-  Melange_Cartes(Nombre_Joueurs_char+1);
+   // Appel de la fonction de mélange des cartes.
+   Melange_Cartes(Nombre_Joueurs_char+1);
 
-
-   // Initialisez le vecteur de joueurs avec le dealer plus les joueurs humains
+   // Initialisation des joueurs, y compris le dealer.
    joueurs.resize(Nombre_Joueurs + 1);
 
-   // Définissez le nom du dealer
+   // Définition du nom du dealer.
    strcpy(joueurs[0].nom, "Dealer");
 
-   // Obtenez les noms des joueurs humains
+   // Boucle pour obtenir et définir les noms des joueurs humains.
    for (int i = 1; i <= Nombre_Joueurs; ++i)
    {
        std::cout << "Entrez le nom pour le joueur " << i << ": ";
        std::string nomTemp;
        std::getline(std::cin, nomTemp);
 
+       // Si le nom est trop long, il est tronqué pour s'adapter.
        if (nomTemp.length() >= sizeof(joueurs[i].nom))
        {
            std::cerr << "Erreur : le nom est trop long. Il sera tronque." << std::endl;
            nomTemp.resize(sizeof(joueurs[i].nom) - 1);
        }
 
+       // Copie du nom temporaire dans l'objet joueur.
        strcpy(joueurs[i].nom, nomTemp.c_str());
    }
 
-   // Affichez tous les noms des joueurs
+   // Affichage des noms de tous les joueurs pour confirmation.
    for (size_t i = 0; i < joueurs.size(); ++i)
    {
        std::cout << "Joueur " << i << " : " << joueurs[i].nom << std::endl;
    }
 
+
  // Distribution des cartes
- Distribuer_Cartes(joueurs);
-
- // // Afficher les cartes de chaque joueur
- //
- //  for (size_t i = 0; i < joueurs.size(); ++i)
- //  {
- //      std::cout << "Joueur " << i << " (" << joueurs[i].nom << ") a les cartes: ";
- //      for (const auto& carte : joueurs[i].cartes)
- //      {
- //          std::cout << carte << " ";
- //      }
- //      std::cout << std::endl;
- //  }
-
+    Distribuer_Cartes(joueurs);
 
  // Affichage des cartes du dealer
  ///Afficher_Cartes_Joueur(joueurs[0], 0);

@@ -7,6 +7,7 @@
 
 int Melange_Cartes(char value)
 {
+    value++;
     if (value < '1' || value > '8')
         return 0; // Si la valeur n'est pas entre 1 et 8, renvoyer 0
 
