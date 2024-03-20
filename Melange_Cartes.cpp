@@ -1,15 +1,12 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
-#include <string>
-#include <random>
 #include <algorithm>
 #include <ctime>
+#include "Melange_Cartes.h"
 
-
-
-
-int Melange_Cartes(char value) {
+int Melange_Cartes(char value)
+{
     if (value < '1' || value > '8')
         return 0; // Si la valeur n'est pas entre 1 et 8, renvoyer 0
 
