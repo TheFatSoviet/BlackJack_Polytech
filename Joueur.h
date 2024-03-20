@@ -17,6 +17,8 @@ public:
 
     Joueur();
     void creation_joueur(const char* nouveau_nom);
+    void setTypeJoueur(const char* type);
+    bool pioche_tir16() const;
 };
 
 #endif

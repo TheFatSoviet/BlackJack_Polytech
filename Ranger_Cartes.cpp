@@ -46,5 +46,5 @@ void Ranger_Cartes(std::vector<Joueur>& joueurs)
     }
 
     fileOut.close();
-    std::cout << "Cartes ajoutees avec succes a la fin du fichier." << std::endl;
+    std::cout << "Cartes ranger avec succes dans le sabot." << std::endl;
 }
