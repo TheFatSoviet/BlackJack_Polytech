@@ -1,7 +1,6 @@
 
-#include "Joueur.cpp"
 
-class croupier:public Joueur{
+class croupier{
 public:
   bool pioche_croupier(int score_in_game){
       if (score_in_game > 17){

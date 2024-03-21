@@ -46,7 +46,7 @@ void Afficher_Cartes_Joueur(const Joueur& joueur)
     std::cout << std::endl; // Termine l'affichage par un retour à la ligne pour une meilleure lisibilité.
 }
 
-//Methode pour affciher les donner des joueur
+
 void Afficher_donner_joueur(const Joueur& joueur){
-  std::cout << joueur.nom << "," << joueur.type_joueur << "," << joueur.jeton_possede;
+    std::cout << "," << joueur.nom << "," << joueur.nb_partie_joue << ',' << joueur.jeton_possede << std::endl;
 }

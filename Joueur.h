@@ -7,8 +7,10 @@
 #include "tir16.cpp"
 #include "rand.cpp"
 #include "ret3.cpp"
+#include "humain.cpp"
+#include "croupier.cpp"
 
-class Joueur : public tir16, public rand1, public ret3
+class Joueur : public tir16, public rand1, public ret3, public humain , public croupier
 {
 public:
     char nom[20];
@@ -23,7 +25,7 @@ public:
     void creation_joueur(const char* nouveau_nom);
     void setTypeJoueur(const char* type);
     void AfficherCartesJoueur(const Joueur& joueur, size_t numeroDuJoueur);
-    void Afficher_donner_joueur(const Joueur& joueur);
+    void Afficher_donner_joueur(void);
 };
 
 #endif

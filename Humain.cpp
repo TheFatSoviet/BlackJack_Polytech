@@ -3,7 +3,7 @@
 
 using namespace std;
 
-class Humain {
+class humain{
 public:
     // Méthode pour demander à l'utilisateur s'il souhaite tirer une carte.
     bool pioche_humain() {
