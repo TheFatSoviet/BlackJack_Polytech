@@ -112,7 +112,7 @@ void BoucleDeJeu(std::vector<Joueur>& joueurs) {
                 Retire_Cartes(joueur);
                 quelquUnDoitPiocher = true;
             }
-            else if (strcmp(joueur.type_joueur, "ret3") == 0 && joueur.pioche_ret3())
+            else if (strcmp(joueur.type_joueur, "ret3") == 0 && joueur.pioche_ret3(joueur.score_in_game))
             {
                 std::cout << joueur.nom << " pioche une carte." << std::endl;
                 Retire_Cartes(joueur);

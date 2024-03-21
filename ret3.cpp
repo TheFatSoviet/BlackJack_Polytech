@@ -5,11 +5,13 @@ class ret3
 {
 public:
 
-bool pioche_ret3()
+bool pioche_ret3(int score)
 {
     static int i=0;
-
-    if (i<1)
+    if(score >= 21){
+      return false;
+    }
+    if (i<3)
     {
       i=i+1;
       return true;
