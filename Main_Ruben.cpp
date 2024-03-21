@@ -5,7 +5,6 @@
 #include "Distribuer_Cartes.cpp"
 #include "Calcule_Score.cpp"
 
-
 #include "Melange_Cartes.cpp"
 #include "Ranger_Cartes.cpp"
 
@@ -68,6 +67,112 @@ void Retire_Cartes(Joueur& joueur) {
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+void BoucleDeJeu(std::vector<Joueur>& joueurs) {
+    bool tousPeuventPiocher;
+    do {
+        tousPeuventPiocher = false; // faire un tab avec tt les joueur et si 1 = 1 bah pas while
+        for (Joueur& joueur : joueurs)
+        {
+            joueur.score_in_game = Calcule_Score(joueur.cartes);
+
+
+
+            if (strcmp(joueur.type_joueur,"croupier")==0)
+            {
+
+                if (joueurs[0].pioche_croupier(joueurs[0].score_in_game))
+                      {
+                          std::cout << "Le dealer " << joueurs[0].nom << " pioche une carte." << std::endl;
+                          Retire_Cartes(joueurs[0]);
+                          joueurs[0].score_in_game = Calcule_Score(joueurs[0].cartes);
+
+                      }
+                      else {
+                          std::cout << "Le dealer " << joueurs[0].nom << " ne pioche pas." << std::endl;
+                      }
+
+
+
+
+
+
+
+
+
+
+
+
+
+            }
+
+
+
+
+
+
+
+        }
+    } while (tousPeuventPiocher);
+
+    // Calcul final des scores pour tous les joueurs après la fin de la pioche
+    for (Joueur& joueur : joueurs) {
+        joueur.score_in_game = Calcule_Score(joueur.cartes);
+        std::cout << "Le joueur " << joueur.nom << " a un score de :" << joueur.score_in_game << std::endl;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Le point d'entrée principal du programme.
 int main()
 {
@@ -103,6 +208,8 @@ int main()
 
    // Définition du nom du dealer.
    strcpy(joueurs[0].nom, "Dealer");
+   strcpy(joueurs[0].type_joueur, "croupier");
+
 
    // Boucle pour obtenir et définir les noms des joueurs humains.
    for (int i = 1; i <= Nombre_Joueurs; ++i)
@@ -122,8 +229,6 @@ int main()
        strcpy(joueurs[i].nom, nomTemp.c_str());
    }
 
-
-
   // Après avoir défini les noms des joueurs
   for (int i = 1; i <= Nombre_Joueurs; ++i) // Inclure 0 pour inclure le dealer dans la saisie
   {
@@ -135,17 +240,6 @@ int main()
       strncpy(joueurs[i].type_joueur, typeTemp.c_str(), sizeof(joueurs[i].type_joueur) - 1);
       joueurs[i].type_joueur[sizeof(joueurs[i].type_joueur) - 1] = '\0'; // Assure que la chaîne est terminée par un '\0'
     }
-
-
-
-
-
-
-
-
-
-
-
 
    // Affichage des noms de tous les joueurs pour confirmation.
    for (size_t i = 0; i < joueurs.size(); ++i)
@@ -189,6 +283,87 @@ int main()
   {
       Afficher_Cartes_Joueur(joueurs[i], i);
   }
+
+
+
+
+
+//ici faut :
+// une boucle pour : calculer score
+// mais en mm temps si ya une pioche faut encore calculer le score du joeur qui pioche
+// en plus mettre en place les types
+
+
+  // for (size_t i = 0; i < joueurs.size(); ++i)
+  // {
+  //       joueurs[i].score_in_game = Calcule_Score(joueurs[i].cartes);
+  //
+  //
+  //
+  //       if (joueurs[0].pioche_croupier(joueurs[0].score_in_game))
+  //       {
+  //           std::cout << "Le dealer " << joueurs[0].nom << " pioche une carte." << std::endl;
+  //           Retire_Cartes(joueurs[0]);
+  //           joueurs[0].score_in_game = Calcule_Score(joueurs[0].cartes);
+  //
+  //       }
+  //       else {
+  //           std::cout << "Le dealer " << joueurs[0].nom << " ne pioche pas." << std::endl;
+  //       }
+  //
+  //
+  //       //std::cout << "Le joueur " << joueurs[i].nom << "a :" << joueurs[i].score_in_game << std::endl;
+  // }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//score
+  for (size_t i = 0; i < joueurs.size(); ++i)
+  {
+        std::cout << "Le joueur " << joueurs[i].nom << " a :" << joueurs[i].score_in_game << std::endl;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

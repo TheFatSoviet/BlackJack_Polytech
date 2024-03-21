@@ -16,7 +16,8 @@ int Melange_Cartes(char value)
     std::vector<char> Cartes;
 
     // Multiplication du jeu de cartes par le nombre de joueurs
-    for (int i = 0; i < (value - '0'); ++i)
+    for (int i = 0; i < (value - '0') * 4; ++i)
+
     {
         Cartes.insert(Cartes.end(), Sabot_Type.begin(), Sabot_Type.end());
     }
