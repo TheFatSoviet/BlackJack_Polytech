@@ -1,4 +1,4 @@
-#include "Joueur.cpp"
+#include "gain.cpp"
 
 
 using namespace std;
@@ -6,6 +6,8 @@ using namespace std;
 
 int main()
 {
+
+    /*
     vector<Joueur> joueurs(3);
 
 
@@ -33,8 +35,24 @@ int main()
       cout<<ouii<<endl;
 
     }
+    */
 
 
+    int score_c=21,score_c2=17,score_c3=23;
+    int score_j1=19,score_j2=15,score_j3=21,score_j4=24;
+
+    int jeton =55;
+    int mise=10;
+
+    cout<<jeton<<endl;
+    jeton=calcul_gain(score_j1,score_c,jeton,mise);
+    cout<<jeton<<endl;
+    jeton=calcul_gain(score_j3,score_c2,jeton,mise);
+    cout<<jeton<<endl;
+    jeton=calcul_gain(score_j2,score_c3,jeton,mise);
+    cout<<jeton<<endl;
+    jeton=calcul_gain(score_j4,score_c2,jeton,mise);
+    cout<<jeton<<endl;
 
 
     return 0;
