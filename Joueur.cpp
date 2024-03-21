@@ -1,7 +1,8 @@
-#include "Joueur.h"
 #include <cstring> // Pour les fonctions de manipulation de chaînes de caractères comme strcpy et strncpy.
 #include <iostream> // Pour l'entrée/sortie, notamment std::cerr.
+#include "Joueur.h"
 
+using namespace std;
 // Définition du constructeur de la classe Joueur.
 Joueur::Joueur() {
     nom[0] = '\0'; // Initialise le nom du joueur avec une chaîne vide.
@@ -24,6 +25,8 @@ void Joueur::setTypeJoueur(const char* type)
 // Méthode pour définir ou changer le nom du joueur.
 void Joueur::creation_joueur(const char* nouveau_nom)
 {
+
+
     size_t longueur_nom = strlen(nouveau_nom); // Calcule la longueur du nouveau nom.
     if (longueur_nom >= sizeof(nom)) // Vérifie si le nouveau nom est trop long pour le tableau 'nom'.
     {
@@ -37,16 +40,16 @@ void Joueur::creation_joueur(const char* nouveau_nom)
 void Afficher_Cartes_Joueur(const Joueur& joueur)
 {
     // Commence par afficher le numéro et le nom du joueur.
-    std::cout << "Joueur " << " (" << joueur.nom << ") a les cartes: ";
+    cout << "Joueur " << " (" << joueur.nom << ") a les cartes: ";
     // Itère sur le vecteur de cartes du joueur pour afficher chaque carte.
     for (const auto& carte : joueur.cartes)
     {
-        std::cout << carte << " "; // Affiche la carte suivie d'un espace pour séparer les cartes entre elles.
+        cout << carte << " "; // Affiche la carte suivie d'un espace pour séparer les cartes entre elles.
     }
-    std::cout << std::endl; // Termine l'affichage par un retour à la ligne pour une meilleure lisibilité.
+    cout << std::endl; // Termine l'affichage par un retour à la ligne pour une meilleure lisibilité.
 }
 
 
 void Afficher_donner_joueur(const Joueur& joueur){
-    std::cout << "," << joueur.nom << "," << joueur.nb_partie_joue << ',' << joueur.jeton_possede << std::endl;
+      cout << "," << joueur.nom << "," << joueur.nb_partie_joue << ',' << joueur.jeton_possede << std::endl;
 }
