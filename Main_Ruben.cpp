@@ -96,7 +96,6 @@ void Retire_Cartes(Joueur& joueur) {
 void BoucleDeJeu(std::vector<Joueur>& joueurs) {
     bool quelquUnDoitPiocher;
 
-    std::cout << std::endl;
     std::cout << "//////////////////////////////////////////////////" << std::endl;
     std::cout << "/////////////////    PHASE DE PIOCHE    //////////" << std::endl;
     std::cout << "//////////////////////////////////////////////////" << std::endl;

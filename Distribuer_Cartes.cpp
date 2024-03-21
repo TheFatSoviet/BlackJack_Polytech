@@ -7,6 +7,12 @@
 
 void Distribuer_Cartes(std::vector<Joueur>& joueurs)
 {
+
+    std::cout << "//////////////////////////////////////////////////" << std::endl;
+    std::cout << "/////////////    PHASE DE DISTRIBUTION    ////////" << std::endl;
+    std::cout << "//////////////////////////////////////////////////" << std::endl;
+    std::cout << std::endl;
+
     std::ifstream fileIn("Sabot.txt"); // Ouvre le fichier Sabot.txt pour lire les cartes disponibles.
     std::string contenu, carte;
     std::vector<std::string> cartes; // Vecteur pour stocker toutes les cartes lues du fichier.
