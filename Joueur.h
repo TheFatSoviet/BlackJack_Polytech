@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <cstddef>  // Pour size_t
 
 class Joueur
 {
@@ -19,6 +20,8 @@ public:
     void creation_joueur(const char* nouveau_nom);
     void setTypeJoueur(const char* type);
     bool pioche_tir16() const;
+    void AfficherCartesJoueur(const Joueur& joueur, size_t numeroDuJoueur);
+    void Afficher_donner_joueur(const Joueur& joueur);
 };
 
 #endif

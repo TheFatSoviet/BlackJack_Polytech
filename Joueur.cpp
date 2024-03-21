@@ -20,11 +20,6 @@ void Joueur::setTypeJoueur(const char* type)
     type_joueur[sizeof(type_joueur) - 1] = '\0'; // Assure que la chaîne est bien terminée par un caractère nul.
 }
 
-// Méthode pour déterminer si le joueur doit piocher une carte selon la règle du 16.
-bool Joueur::pioche_tir16() const
-{
-    return score_in_game < 17; // Retourne vrai si le score est inférieur à 17, indiquant que le joueur doit piocher.
-}
 
 // Méthode pour définir ou changer le nom du joueur.
 void Joueur::creation_joueur(const char* nouveau_nom)
@@ -36,4 +31,22 @@ void Joueur::creation_joueur(const char* nouveau_nom)
         return; // Quitte la méthode sans changer le nom.
     }
     strcpy(nom, nouveau_nom); // Copie le nouveau nom dans le tableau 'nom' si tout est en ordre.
+}
+
+// Methode pour afficher les cartes des Joueur
+void Afficher_Cartes_Joueur(const Joueur& joueur)
+{
+    // Commence par afficher le numéro et le nom du joueur.
+    std::cout << "Joueur " << " (" << joueur.nom << ") a les cartes: ";
+    // Itère sur le vecteur de cartes du joueur pour afficher chaque carte.
+    for (const auto& carte : joueur.cartes)
+    {
+        std::cout << carte << " "; // Affiche la carte suivie d'un espace pour séparer les cartes entre elles.
+    }
+    std::cout << std::endl; // Termine l'affichage par un retour à la ligne pour une meilleure lisibilité.
+}
+
+//Methode pour affciher les donner des joueur
+void Afficher_donner_joueur(const Joueur& joueur){
+  std::cout << joueur.nom << "," << joueur.type_joueur << "," << joueur.jeton_possede;
 }
