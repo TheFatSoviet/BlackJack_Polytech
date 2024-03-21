@@ -4,8 +4,11 @@
 #include <string>
 #include <vector>
 #include <cstddef>  // Pour size_t
+#include "tir16.cpp"
+#include "rand.cpp"
+#include "ret3.cpp"
 
-class Joueur
+class Joueur : public tir16, public rand1, public ret3
 {
 public:
     char nom[20];
@@ -19,7 +22,6 @@ public:
     Joueur();
     void creation_joueur(const char* nouveau_nom);
     void setTypeJoueur(const char* type);
-    bool pioche_tir16() const;
     void AfficherCartesJoueur(const Joueur& joueur, size_t numeroDuJoueur);
     void Afficher_donner_joueur(const Joueur& joueur);
 };

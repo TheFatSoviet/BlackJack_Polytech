@@ -1,5 +1,5 @@
 #include "gain.cpp"
-
+#include "Joueur.cpp"
 
 using namespace std;
 
@@ -7,7 +7,7 @@ using namespace std;
 int main()
 {
 
-    /*
+
     vector<Joueur> joueurs(3);
 
 
@@ -35,7 +35,7 @@ int main()
       cout<<ouii<<endl;
 
     }
-    */
+
 
 
     int score_c=21,score_c2=17,score_c3=23;
