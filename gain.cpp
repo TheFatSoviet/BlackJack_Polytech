@@ -3,6 +3,7 @@
 
 using namespace std;
 
+class gain{
 
   int calcul_gain(int score_j,int score_c,int jeton, int mise)
   {
@@ -40,3 +41,5 @@ using namespace std;
 
     return jeton;
   }
+
+};
