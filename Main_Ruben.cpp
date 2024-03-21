@@ -48,14 +48,18 @@ void Retire_Cartes(Joueur& joueur) {
             // Mettre à jour le fichier Sabot.txt avec les cartes restantes.
             std::ofstream fileOut("Sabot.txt");
             if (fileOut.is_open()) {
-                for (size_t i = 0; i < cartes.size(); ++i) {
+                for (size_t i = 0; i < cartes.size(); ++i)
+                {
                     fileOut << cartes[i];
-                    if (i != cartes.size() - 1) {
+                    if (i != cartes.size() - 1)
+                    {
                         fileOut << ",";
                     }
                 }
                 fileOut.close();
-            } else {
+            }
+            else
+            {
                 std::cerr << "Erreur lors de la réouverture du fichier pour écriture." << std::endl;
             }
         } else {
@@ -93,9 +97,11 @@ void Retire_Cartes(Joueur& joueur) {
 
 
 
+
 void BoucleDeJeu(std::vector<Joueur>& joueurs) {
     bool quelquUnDoitPiocher;
 
+    std::cout << std::endl;
     std::cout << "//////////////////////////////////////////////////" << std::endl;
     std::cout << "/////////////////    PHASE DE PIOCHE    //////////" << std::endl;
     std::cout << "//////////////////////////////////////////////////" << std::endl;
@@ -112,7 +118,7 @@ void BoucleDeJeu(std::vector<Joueur>& joueurs) {
                 Retire_Cartes(joueur);
                 quelquUnDoitPiocher = true;
             }
-            else if (strcmp(joueur.type_joueur, "ret3") == 0 && joueur.pioche_ret3())
+            else if (strcmp(joueur.type_joueur, "ret3") == 0 && joueur.pioche_ret3(joueur.score_in_game))
             {
                 std::cout << joueur.nom << " pioche une carte." << std::endl;
                 Retire_Cartes(joueur);
@@ -124,7 +130,7 @@ void BoucleDeJeu(std::vector<Joueur>& joueurs) {
                 Retire_Cartes(joueur);
                 quelquUnDoitPiocher = true;
             }
-            else if (strcmp(joueur.type_joueur, "humain") == 0 && joueur.pioche_humain())
+            else if (strcmp(joueur.type_joueur, "humain") == 0 && joueur.pioche_humain(joueur.score_in_game))
             {
                 std::cout << joueur.nom << " pioche une carte." << std::endl;
                 Retire_Cartes(joueur);
@@ -134,7 +140,7 @@ void BoucleDeJeu(std::vector<Joueur>& joueurs) {
             {
                 std::cout << joueur.nom << " pioche une carte." << std::endl;
                 Retire_Cartes(joueur);
-                quelquUnDoitPiocher = true;
+                quelquUnDoitPiocher = true;                       // PROBLEM ON BOCULE SIMULTANEMENT JOUEUR (plusieurs jourus) DANS LKES IF RESPECTIFSD
             }
             // Ajoutez ici d'autres conditions pour les autres types de joueurs
             // ...
@@ -146,14 +152,16 @@ void BoucleDeJeu(std::vector<Joueur>& joueurs) {
         }
 
         // Si au moins un joueur a pioché, tous les scores sont recalculés et affichés
-        if (quelquUnDoitPiocher) {
+        if (quelquUnDoitPiocher)
+        {
             for (Joueur& joueur : joueurs)
             {
                 std::cout << ">--------------- Le joueur " << joueur.nom << " a un score de : " << joueur.score_in_game << std::endl;
             }
         }
 
-    } while (quelquUnDoitPiocher); // Continuer tant qu'au moins un joueur doit piocher
+    }
+    while (quelquUnDoitPiocher); // Continuer tant qu'au moins un joueur doit piocher
 }
 
 
