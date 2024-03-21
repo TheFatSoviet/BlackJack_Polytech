@@ -4,30 +4,23 @@
 #include "Retire_Cartes.cpp"
 #include "Distribuer_Cartes.cpp"
 #include "Calcule_Score.cpp"
-#include "Joueur.cpp"
+
 
 #include "Melange_Cartes.cpp"
 #include "Ranger_Cartes.cpp"
 
 #include "Joueur.h"
+#include "Joueur.cpp"
 #include "Distribuer_Cartes.h"
 #include "Ranger_Cartes.h"
 
 #include "Afficher_Cartes_Joueur.cpp"
-#include "tir16.cpp"
 
 #include <iostream>
 #include <fstream>
 #include <vector>
 #include <algorithm>
 #include <ctime>
-
-
-
-
-
-
-
 
 
 void Retire_Cartes(Joueur& joueur) {
@@ -73,17 +66,6 @@ void Retire_Cartes(Joueur& joueur) {
         std::cerr << "Erreur lors de l'ouverture du fichier." << std::endl;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
 
 
 // Le point d'entrée principal du programme.
@@ -140,6 +122,31 @@ int main()
        strcpy(joueurs[i].nom, nomTemp.c_str());
    }
 
+
+
+  // Après avoir défini les noms des joueurs
+  for (int i = 1; i <= Nombre_Joueurs; ++i) // Inclure 0 pour inclure le dealer dans la saisie
+  {
+      std::string typeTemp;
+
+      std::cout << "Entrez le type pour le joueur " << i << " : ";
+      std::getline(std::cin, typeTemp);
+
+      strncpy(joueurs[i].type_joueur, typeTemp.c_str(), sizeof(joueurs[i].type_joueur) - 1);
+      joueurs[i].type_joueur[sizeof(joueurs[i].type_joueur) - 1] = '\0'; // Assure que la chaîne est terminée par un '\0'
+    }
+
+
+
+
+
+
+
+
+
+
+
+
    // Affichage des noms de tous les joueurs pour confirmation.
    for (size_t i = 0; i < joueurs.size(); ++i)
    {
@@ -161,18 +168,12 @@ int main()
 
 
 
-
-
-
-
-
-
   //joueurs[0].score_in_game = 10 ;
 
   joueurs[0].score_in_game = Calcule_Score(joueurs[0].cartes);
 
 
-  if (joueurs[0].pioche_tir16())
+  if (joueurs[0].pioche_tir16(joueurs[0].score_in_game))
   {
       std::cout << "Le dealer " << joueurs[0].nom << " pioche une carte." << std::endl;
       Retire_Cartes(joueurs[0]);
@@ -183,8 +184,11 @@ int main()
 
 
 
-
-
+  // Affichage des cartes de tous les joueurs, y compris le dealer
+  for (size_t i = 0; i < joueurs.size(); ++i)
+  {
+      Afficher_Cartes_Joueur(joueurs[i], i);
+  }
 
 
 
