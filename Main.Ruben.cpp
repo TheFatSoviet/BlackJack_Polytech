@@ -94,58 +94,68 @@ void Retire_Cartes(Joueur& joueur) {
 
 
 void BoucleDeJeu(std::vector<Joueur>& joueurs) {
-    bool tousPeuventPiocher;
+    bool quelquUnDoitPiocher;
+
+    std::cout << "//////////////////////////////////////////////////" << std::endl;
+    std::cout << "/////////////////    PHASE DE PIOCHE    //////////" << std::endl;
+    std::cout << "//////////////////////////////////////////////////" << std::endl;
+
     do {
-        tousPeuventPiocher = false; // faire un tab avec tt les joueur et si 1 = 1 bah pas while
-        for (Joueur& joueur : joueurs)
-        {
+        quelquUnDoitPiocher = false; // Indicateur pour vérifier si au moins un joueur doit piocher
+        for (Joueur& joueur : joueurs) {
             joueur.score_in_game = Calcule_Score(joueur.cartes);
 
-
-
-            if (strcmp(joueur.type_joueur,"croupier")==0)
+            // Appliquer la logique de pioche en fonction du type de joueur
+            if (strcmp(joueur.type_joueur, "croupier") == 0 && joueur.pioche_croupier(joueur.score_in_game))
             {
-
-                if (joueurs[0].pioche_croupier(joueurs[0].score_in_game))
-                      {
-                          std::cout << "Le dealer " << joueurs[0].nom << " pioche une carte." << std::endl;
-                          Retire_Cartes(joueurs[0]);
-                          joueurs[0].score_in_game = Calcule_Score(joueurs[0].cartes);
-
-                      }
-                      else {
-                          std::cout << "Le dealer " << joueurs[0].nom << " ne pioche pas." << std::endl;
-                      }
-
-
-
-
-
-
-
-
-
-
-
-
-
+                std::cout << "Le croupier " << joueur.nom << " pioche une carte." << std::endl;
+                Retire_Cartes(joueur);
+                quelquUnDoitPiocher = true;
             }
+            else if (strcmp(joueur.type_joueur, "ret3") == 0 && joueur.pioche_ret3())
+            {
+                std::cout << joueur.nom << " pioche une carte." << std::endl;
+                Retire_Cartes(joueur);
+                quelquUnDoitPiocher = true;
+            }
+            else if (strcmp(joueur.type_joueur, "tir16") == 0 && joueur.pioche_tir16(joueur.score_in_game))  //joueurs[0].pioche_tir16(joueurs[0].score_in_game)
+            {
+                std::cout << joueur.nom << " pioche une carte." << std::endl;
+                Retire_Cartes(joueur);
+                quelquUnDoitPiocher = true;
+            }
+            else if (strcmp(joueur.type_joueur, "humain") == 0 && joueur.pioche_humain())
+            {
+                std::cout << joueur.nom << " pioche une carte." << std::endl;
+                Retire_Cartes(joueur);
+                quelquUnDoitPiocher = true;
+            }
+            else if (strcmp(joueur.type_joueur, "rand1") == 0 && joueur.pioche_rand1())
+            {
+                std::cout << joueur.nom << " pioche une carte." << std::endl;
+                Retire_Cartes(joueur);
+                quelquUnDoitPiocher = true;
+            }
+            // Ajoutez ici d'autres conditions pour les autres types de joueurs
+            // ...
+
+            // Recalculer le score après chaque pioche
 
 
-
-
-
-
-
+            joueur.score_in_game = Calcule_Score(joueur.cartes);
         }
-    } while (tousPeuventPiocher);
 
-    // Calcul final des scores pour tous les joueurs après la fin de la pioche
-    for (Joueur& joueur : joueurs) {
-        joueur.score_in_game = Calcule_Score(joueur.cartes);
-        std::cout << "Le joueur " << joueur.nom << " a un score de :" << joueur.score_in_game << std::endl;
-    }
+        // Si au moins un joueur a pioché, tous les scores sont recalculés et affichés
+        if (quelquUnDoitPiocher) {
+            for (Joueur& joueur : joueurs)
+            {
+                std::cout << ">--------------- Le joueur " << joueur.nom << " a un score de : " << joueur.score_in_game << std::endl;
+            }
+        }
+
+    } while (quelquUnDoitPiocher); // Continuer tant qu'au moins un joueur doit piocher
 }
+
 
 
 
@@ -229,7 +239,7 @@ int main()
        strcpy(joueurs[i].nom, nomTemp.c_str());
    }
 
-  // Après avoir défini les noms des joueurs
+  // Après avoir défini les types des joueurs
   for (int i = 1; i <= Nombre_Joueurs; ++i) // Inclure 0 pour inclure le dealer dans la saisie
   {
       std::string typeTemp;
@@ -242,10 +252,16 @@ int main()
     }
 
    // Affichage des noms de tous les joueurs pour confirmation.
-   for (size_t i = 0; i < joueurs.size(); ++i)
-   {
-       std::cout << "Joueur " << i << " : " << joueurs[i].nom << std::endl;
-   }
+   // for (size_t i = 0; i < joueurs.size(); ++i)
+   // {
+   //     std::cout << "Joueur " << i << " : " << joueurs[i].nom << std::endl;
+   // }
+
+
+
+
+
+
 
  // Distribution des cartes
     Distribuer_Cartes(joueurs);
@@ -263,30 +279,30 @@ int main()
 
 
   //joueurs[0].score_in_game = 10 ;
+//----------------------------------------------------------------------------------------------------------------------------
+  // joueurs[0].score_in_game = Calcule_Score(joueurs[0].cartes);
+  //
+  //
+  // if (joueurs[0].pioche_tir16(joueurs[0].score_in_game))
+  // {
+  //     std::cout << "Le dealer " << joueurs[0].nom << " pioche une carte." << std::endl;
+  //     Retire_Cartes(joueurs[0]);
+  // }
+  // else {
+  //     std::cout << "Le dealer " << joueurs[0].nom << " ne pioche pas." << std::endl;
+  // }
+  //
+  //
+  //
+  // // Affichage des cartes de tous les joueurs, y compris le dealer
+  // for (size_t i = 0; i < joueurs.size(); ++i)
+  // {
+  //     Afficher_Cartes_Joueur(joueurs[i], i);
+  // }
+//----------------------------------------------------------------------------------------------------------------------------
 
-  joueurs[0].score_in_game = Calcule_Score(joueurs[0].cartes);
 
-
-  if (joueurs[0].pioche_tir16(joueurs[0].score_in_game))
-  {
-      std::cout << "Le dealer " << joueurs[0].nom << " pioche une carte." << std::endl;
-      Retire_Cartes(joueurs[0]);
-  }
-  else {
-      std::cout << "Le dealer " << joueurs[0].nom << " ne pioche pas." << std::endl;
-  }
-
-
-
-  // Affichage des cartes de tous les joueurs, y compris le dealer
-  for (size_t i = 0; i < joueurs.size(); ++i)
-  {
-      Afficher_Cartes_Joueur(joueurs[i], i);
-  }
-
-
-
-
+BoucleDeJeu(joueurs);
 
 //ici faut :
 // une boucle pour : calculer score
