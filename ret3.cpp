@@ -7,10 +7,9 @@ public:
 
 bool pioche_ret3()
 {
-    int n=3;
-    int i=0;
+    static int i=0;
 
-    if (i<n)
+    if (i<1)
     {
       i=i+1;
       return true;

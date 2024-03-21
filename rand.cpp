@@ -9,7 +9,7 @@ public:
 
   bool pioche_rand1()
   {
-      int i=0;
+      static int i=0;
       // Crée un générateur de nombres aléatoires
       random_device rd;
       mt19937 gen(rd());
@@ -18,7 +18,7 @@ public:
       uniform_int_distribution<int> distribution(0, 3);
 
       // Génère un nombre aléatoire
-      int n = distribution(gen);
+      static int n = distribution(gen);
 
       if (i<n)//demande a piocher tant que i<n
       {
