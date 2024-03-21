@@ -1,4 +1,6 @@
-#include "random"
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
 using namespace std;
 
@@ -10,15 +12,12 @@ public:
   bool pioche_rand1()
   {
       static int i=0;
-      // Crée un générateur de nombres aléatoires
-      random_device rd;
-      mt19937 gen(rd());
 
-      // Définit la plage de valeurs (de 0 à 3)
-      uniform_int_distribution<int> distribution(0, 3);
+      // Initialisation de la graine du générateur pseudo-aléatoire
+      srand(time(NULL));
 
-      // Génère un nombre aléatoire
-      static int n = distribution(gen);
+      // Génère un nombre aléatoire entre 0 et 3
+      int n = rand() % 4; // Le reste de la division par 4
 
       if (i<n)//demande a piocher tant que i<n
       {
