@@ -22,6 +22,70 @@
 #include <algorithm>
 #include <ctime>
 
+
+
+
+
+
+
+
+
+void Retire_Cartes(Joueur& joueur) {
+    std::ifstream fileIn("Sabot.txt");
+    std::string contenu, carte;
+    std::vector<std::string> cartes;
+
+    if (fileIn.is_open()) {
+        getline(fileIn, contenu); // Lit toute la ligne du fichier Sabot.txt.
+        fileIn.close();
+
+        std::stringstream ss(contenu);
+
+        // Lire toutes les cartes dans le vecteur.
+        while (std::getline(ss, carte, ',')) {
+            if (!carte.empty()) { // Vérifier que la chaîne n'est pas vide.
+                cartes.push_back(carte);
+            }
+        }
+
+        if (!cartes.empty()) {
+            // Attribuer la première carte au joueur et la retirer du vecteur des cartes.
+            joueur.cartes.push_back(cartes[0]);
+            cartes.erase(cartes.begin());
+
+            // Mettre à jour le fichier Sabot.txt avec les cartes restantes.
+            std::ofstream fileOut("Sabot.txt");
+            if (fileOut.is_open()) {
+                for (size_t i = 0; i < cartes.size(); ++i) {
+                    fileOut << cartes[i];
+                    if (i != cartes.size() - 1) {
+                        fileOut << ",";
+                    }
+                }
+                fileOut.close();
+            } else {
+                std::cerr << "Erreur lors de la réouverture du fichier pour écriture." << std::endl;
+            }
+        } else {
+            std::cerr << "Pas de cartes disponibles pour retirer." << std::endl;
+        }
+    } else {
+        std::cerr << "Erreur lors de l'ouverture du fichier." << std::endl;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Le point d'entrée principal du programme.
 int main()
 {
@@ -50,7 +114,7 @@ int main()
    }
 
    // Appel de la fonction de mélange des cartes.
-   Melange_Cartes(Nombre_Joueurs_char+1);
+   Melange_Cartes(Nombre_Joueurs_char);
 
    // Initialisation des joueurs, y compris le dealer.
    joueurs.resize(Nombre_Joueurs + 1);
@@ -82,7 +146,6 @@ int main()
        std::cout << "Joueur " << i << " : " << joueurs[i].nom << std::endl;
    }
 
-
  // Distribution des cartes
     Distribuer_Cartes(joueurs);
 
@@ -104,15 +167,19 @@ int main()
 
 
 
-  // joueurs[0].score_in_game = 10 ;
-  // if (joueurs[0].pioche_tir16())
-  // {
-  //     std::cout << "Le dealer " << joueurs[0].nom << " doit piocher une carte." << std::endl;
-  //     // Logique pour piocher une carte pour le dealer
-  // }
-  // else {
-  //     std::cout << "Le dealer " << joueurs[0].nom << " ne pioche pas." << std::endl;
-  // }
+  //joueurs[0].score_in_game = 10 ;
+
+  joueurs[0].score_in_game = Calcule_Score(joueurs[0].cartes);
+
+
+  if (joueurs[0].pioche_tir16())
+  {
+      std::cout << "Le dealer " << joueurs[0].nom << " pioche une carte." << std::endl;
+      Retire_Cartes(joueurs[0]);
+  }
+  else {
+      std::cout << "Le dealer " << joueurs[0].nom << " ne pioche pas." << std::endl;
+  }
 
 
 
