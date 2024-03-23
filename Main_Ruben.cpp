@@ -229,41 +229,109 @@ int main()
    strcpy(joueurs[0].type_joueur, "croupier");
 
 
-   // Boucle pour obtenir et définir les noms des joueurs humains.
-   for (int i = 1; i <= Nombre_Joueurs; ++i)
-   {
-       std::cout << "Entrez le nom pour le joueur " << i << ": ";
-       std::string nomTemp;
-       std::getline(std::cin, nomTemp);
+  // Boucle pour obtenir et définir les noms des joueurs.
+  for (int i = 1; i <= Nombre_Joueurs; ++i) {
+      std::string nomTemp;
+      bool nomUnique;
 
-       // Si le nom est trop long, il est tronqué pour s'adapter.
-       if (nomTemp.length() >= sizeof(joueurs[i].nom))
-       {
-           std::cerr << "Erreur : le nom est trop long. Il sera tronque." << std::endl;
-           nomTemp.resize(sizeof(joueurs[i].nom) - 1);
-       }
+      do {
+          nomUnique = true; // On suppose initialement que le nom est unique
 
-       // Copie du nom temporaire dans l'objet joueur.
-       strcpy(joueurs[i].nom, nomTemp.c_str());
-   }
+          std::cout << "Entrez le nom pour le joueur " << i << ": ";
+          std::getline(std::cin, nomTemp);
+
+          // Vérifier si le nom est trop long et le tronquer si nécessaire
+          if (nomTemp.length() >= sizeof(joueurs[i].nom)) {
+              std::cerr << "Erreur : le nom est trop long. Il sera tronque." << std::endl;
+              nomTemp.resize(sizeof(joueurs[i].nom) - 1);
+          }
+
+          // Vérifier si le nom est unique par rapport à tous les noms déjà entrés
+          for (int j = 1; j < i; ++j) {
+              if (nomTemp == joueurs[j].nom) {
+                  std::cerr << "Erreur : ce nom est déjà pris. Veuillez en choisir un autre." << std::endl;
+                  nomUnique = false; // Le nom n'est pas unique, demande un autre nom
+                  break; // Pas besoin de continuer à vérifier les autres noms
+              }
+          }
+      } while (!nomUnique); // Répéter tant que le nom n'est pas unique
+
+      // Une fois un nom unique obtenu, l'assigner au joueur
+      strcpy(joueurs[i].nom, nomTemp.c_str());
+  }
+
 
   // Après avoir défini les types des joueurs
-  for (int i = 1; i <= Nombre_Joueurs; ++i) // Inclure 0 pour inclure le dealer dans la saisie
-  {
+  for (int i = 1; i <= Nombre_Joueurs; ++i) { // Exclure le croupier de la saisie
       std::string typeTemp;
+      bool typeValide;
+  
+      do {
+          std::cout << "Entrez le type pour le joueur " << i << " (humain, ret3, rand1, tir16, magic): ";
+          std::getline(std::cin, typeTemp);
 
-      std::cout << "Entrez le type pour le joueur " << i << " : ";
-      std::getline(std::cin, typeTemp);
+          // Vérifier si le type saisi est valide
+          typeValide = typeTemp == "humain" || typeTemp == "ret3" || typeTemp == "rand1" || typeTemp == "tir16" || typeTemp == "magic";
 
-      strncpy(joueurs[i].type_joueur, typeTemp.c_str(), sizeof(joueurs[i].type_joueur) - 1);
-      joueurs[i].type_joueur[sizeof(joueurs[i].type_joueur) - 1] = '\0'; // Assure que la chaîne est terminée par un '\0'
-    }
+          if (!typeValide) {
+              std::cout << "Type invalide. Veuillez réessayer." << std::endl;
+          } else {
+              // Copier le type valide dans l'attribut type_joueur du joueur
+              strncpy(joueurs[i].type_joueur, typeTemp.c_str(), sizeof(joueurs[i].type_joueur) - 1);
+              joueurs[i].type_joueur[sizeof(joueurs[i].type_joueur) - 1] = '\0'; // Assure que la chaîne est terminée par un '\0'
+          }
+
+      } while (!typeValide); // Répéter jusqu'à obtenir un type valide
+  }
+
+
 
    // Affichage des noms de tous les joueurs pour confirmation.
    // for (size_t i = 0; i < joueurs.size(); ++i)
    // {
    //     std::cout << "Joueur " << i << " : " << joueurs[i].nom << std::endl;
    // }
+
+
+
+
+
+
+
+
+
+  std::cout << std::endl;
+  std::cout << "//////////////////////////////////////////////////" << std::endl;
+  std::cout << "/////////////////    PHASE DE MISE    ////////////" << std::endl;
+  std::cout << "//////////////////////////////////////////////////" << std::endl;
+  std::cout << std::endl;
+
+  for (size_t i = 1; i < joueurs.size(); ++i) { // Commence à 1 pour exclure le croupier
+      int mise;
+      mise = 0;
+
+
+      if(strcmp(joueurs[i].type_joueur, "humain") == 1 ) {joueurs[i].jeton_mise = 10; mise = 10;}   //mise bot
+
+      while (mise < 10 || mise > 100)
+      {
+          std::cout << "Joueur " << joueurs[i].nom << ", entrez votre mise (entre 10 et 100 jetons) : ";
+          std::cin >> mise;
+          if (mise < 10 || mise > 100) {
+              std::cout << "Mise non valide. Veuillez miser entre 10 et 100 jetons." << std::endl;
+          }
+      }
+
+      joueurs[i].jeton_mise = mise;
+  }
+
+
+
+
+
+
+
+
 
 
 
@@ -366,7 +434,11 @@ BoucleDeJeu(joueurs);
 
 
 
-
+  std::cout << std::endl;
+  std::cout << "//////////////////////////////////////////////////" << std::endl;
+  std::cout << "/////////////////    SCORE FINALE     ////////////" << std::endl;
+  std::cout << "//////////////////////////////////////////////////" << std::endl;
+  std::cout << std::endl;
 
 //score
   for (size_t i = 0; i < joueurs.size(); ++i)
@@ -382,8 +454,34 @@ BoucleDeJeu(joueurs);
 
 
 
+  std::cout << std::endl;
+  std::cout << "//////////////////////////////////////////////////" << std::endl;
+  std::cout << "/////////////////    PHASE DE GAIN    ////////////" << std::endl;
+  std::cout << "//////////////////////////////////////////////////" << std::endl;
+  std::cout << std::endl;
 
+  for (size_t i = 1; i < joueurs.size(); ++i) {
+      if ( ((joueurs[i].score_in_game > joueurs[0].score_in_game)&& joueurs[i].score_in_game <= 21) ||  (joueurs[0].score_in_game>21 && joueurs[1].score_in_game<=21)) {    // a revoir
+          std::cout << "Joueur " << joueurs[i].nom << " gagne 50 jetons." << std::endl;
+          joueurs[i].jeton_possede += 50; // Ajoute 50 jetons au total du joueur
+      }
+      else
+      {
+          std::cout << "Joueur " << joueurs[i].nom << " perd 50 jetons." << std::endl;
+          joueurs[i].jeton_possede -= 50; // Retire 50 jetons du total du joueur
+          if (joueurs[i].jeton_possede < 0) joueurs[i].jeton_possede = 0; // S'assurer que les jetons ne passent pas en dessous de 0
+      }
+  }
 
+  std::cout << std::endl;
+  std::cout << "//////////////////////////////////////////////////" << std::endl;
+  std::cout << "/////////////////    LA THUNE $$$$    ////////////" << std::endl;
+  std::cout << "//////////////////////////////////////////////////" << std::endl;
+  std::cout << std::endl;
+
+  for (const auto& joueur : joueurs) {
+      std::cout << "Joueur " << joueur.nom << " possède " << joueur.jeton_possede << " jetons." << std::endl;
+  }
 
 
 
