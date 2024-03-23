@@ -10,7 +10,7 @@ int Calcule_Score(const std::vector<std::string>& cartes)
     // Parcourir chaque carte dans le vecteur pour assigner les valeurs initiales.
     for (const std::string& carte : cartes)
     {
-        if (carte == "D" || carte == "R" || carte == "V") // Si la carte est un roi, une dame, ou un valet,
+        if (carte == "D" || carte == "R" || carte == "V" || carte == "X") // Si la carte est un roi, une dame, ou un valet,
         {
             score += 10; // leur valeur est 10.
         }

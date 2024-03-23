@@ -1,33 +1,31 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
-
-using namespace std;
-
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
 
 class rand1
 {
+private:
+    int i; // Variable d'état pour suivre le nombre de pioches
+
 public:
+    rand1() : i(0) { } // Constructeur pour initialiser i à 0
 
-  bool pioche_rand1()
-  {
-      static int i=0;
+    bool pioche_rand1()
+    {
+        // Génère un nombre aléatoire entre 0 et 3, seulement si i est 0
+        if (i == 0)
+        {
+            i = std::rand() % 4; // Le reste de la division par 4
+        }
 
-      // Initialisation de la graine du générateur pseudo-aléatoire
-      srand(time(NULL));
-
-      // Génère un nombre aléatoire entre 0 et 3
-      int n = rand() % 4; // Le reste de la division par 4
-
-      if (i<n)//demande a piocher tant que i<n
-      {
-        i=i+1;
-        return true;
-      }
-      else
-      {
-        i=0;
-        return false;
-      }
-  }
+        if (i > 0) // Demande à piocher tant que i > 0
+        {
+            i--;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 };

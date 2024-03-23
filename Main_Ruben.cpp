@@ -20,7 +20,7 @@
 #include <vector>
 #include <algorithm>
 #include <ctime>
-
+#include <map>
 
 void Retire_Cartes(Joueur& joueur) {
     std::ifstream fileIn("Sabot.txt");
@@ -114,7 +114,7 @@ void BoucleDeJeu(std::vector<Joueur>& joueurs) {
             // Appliquer la logique de pioche en fonction du type de joueur
             if (strcmp(joueur.type_joueur, "croupier") == 0 && joueur.pioche_croupier(joueur.score_in_game))
             {
-                std::cout << "Le croupier " << joueur.nom << " pioche une carte." << std::endl;
+                std::cout << "Le " << joueur.nom << " pioche une carte." << std::endl;
                 Retire_Cartes(joueur);
                 quelquUnDoitPiocher = true;
             }
@@ -135,6 +135,7 @@ void BoucleDeJeu(std::vector<Joueur>& joueurs) {
                 std::cout << joueur.nom << " pioche une carte." << std::endl;
                 Retire_Cartes(joueur);
                 quelquUnDoitPiocher = true;
+                Afficher_Cartes_Joueur(joueur);
             }
             else if (strcmp(joueur.type_joueur, "rand1") == 0 && joueur.pioche_rand1())
             {
@@ -142,11 +143,6 @@ void BoucleDeJeu(std::vector<Joueur>& joueurs) {
                 Retire_Cartes(joueur);
                 quelquUnDoitPiocher = true;                       // PROBLEM ON BOCULE SIMULTANEMENT JOUEUR (plusieurs jourus) DANS LKES IF RESPECTIFSD
             }
-            // Ajoutez ici d'autres conditions pour les autres types de joueurs
-            // ...
-
-            // Recalculer le score après chaque pioche
-
 
             joueur.score_in_game = Calcule_Score(joueur.cartes);
         }
@@ -182,6 +178,53 @@ void BoucleDeJeu(std::vector<Joueur>& joueurs) {
 
 
 
+void verifierSabot(int nombreDeJoueurs) {
+    std::ifstream fileIn("Sabot.txt");
+    std::string contenu;
+    std::map<std::string, int> compteurCartes;
+    int totalCartes = 0;
+
+    if (fileIn.is_open()) {
+        std::getline(fileIn, contenu);
+        fileIn.close();
+
+        std::stringstream ss(contenu);
+        std::string carte;
+        while (std::getline(ss, carte, ',')) {
+            compteurCartes[carte]++;
+            totalCartes++;
+        }
+    } else {
+        std::cerr << "Erreur : impossible d'ouvrir le fichier Sabot.txt" << std::endl;
+        return;
+    }
+
+    int totalCartesAttendu = 52 * (nombreDeJoueurs + 1); // Le +1 est pour inclure les cartes du croupier dans le calcul
+    std::map<std::string, int> valeursAttendues = {
+        {"1", 4 * (nombreDeJoueurs + 1)}, {"2", 4 * (nombreDeJoueurs + 1)}, {"3", 4 * (nombreDeJoueurs + 1)},
+        {"4", 4 * (nombreDeJoueurs + 1)}, {"5", 4 * (nombreDeJoueurs + 1)}, {"6", 4 * (nombreDeJoueurs + 1)},
+        {"7", 4 * (nombreDeJoueurs + 1)}, {"8", 4 * (nombreDeJoueurs + 1)}, {"9", 4 * (nombreDeJoueurs + 1)},
+        {"X", 4 * (nombreDeJoueurs + 1)}, {"V", 4 * (nombreDeJoueurs + 1)}, {"D", 4 * (nombreDeJoueurs + 1)},
+        {"R", 4 * (nombreDeJoueurs + 1)}
+    };
+
+    bool validationReussie = true;
+    if(totalCartes != totalCartesAttendu) {
+        std::cout << "Erreur : le nombre total de cartes dans le sabot (" << totalCartes << ") ne correspond pas au nombre attendu (" << totalCartesAttendu << ")." << std::endl;
+        validationReussie = false;
+    }
+
+    for (const auto& paire : valeursAttendues) {
+        if(compteurCartes[paire.first] != paire.second) {
+            std::cout << "Erreur : le nombre de cartes de valeur " << paire.first << " (" << compteurCartes[paire.first] << ") ne correspond pas au nombre attendu (" << paire.second << ")." << std::endl;
+            validationReussie = false;
+        }
+    }
+
+    if(validationReussie) {
+        std::cout << "La vérification du sabot est valide." << std::endl;
+    }
+}
 
 
 
@@ -197,6 +240,8 @@ int main()
    // Variables pour stocker le nombre de joueurs sous différentes formes.
    char Nombre_Joueurs_char = 0;
    int Nombre_Joueurs = 0;
+   int N_Manche_Actuelle =0;
+  int N_Manche_Total=0;
    // Vecteur pour conserver les joueurs, y compris le dealer.
    std::vector<Joueur> joueurs;
 
@@ -224,8 +269,8 @@ int main()
    // Initialisation des joueurs, y compris le dealer.
    joueurs.resize(Nombre_Joueurs + 1);
 
-   // Définition du nom du dealer.
-   strcpy(joueurs[0].nom, "Dealer");
+   // Définition du nom du Croupier.
+   strcpy(joueurs[0].nom, "Croupier");
    strcpy(joueurs[0].type_joueur, "croupier");
 
 
@@ -308,31 +353,64 @@ int main()
 
 
 
+
+std::cout << "Combien de manche voulez-vous jouer ? : ";
+std::cin >> N_Manche_Total;
+
+//------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ while(N_Manche_Actuelle < N_Manche_Total)
+  {
+  N_Manche_Actuelle++;
+
+  std::cout << std::endl;
+  std::cout << "//////////////////////////////////////////////////" << std::endl;
+  std::cout << "/////////////////    DEBUT ROUND "<<N_Manche_Actuelle << "    ////////////" << std::endl;
+  std::cout << "//////////////////////////////////////////////////" << std::endl;
+  std::cout << std::endl;
+
+
+
+
+  verifierSabot(Nombre_Joueurs);
+
+
+
   std::cout << std::endl;
   std::cout << "//////////////////////////////////////////////////" << std::endl;
   std::cout << "/////////////////    PHASE DE MISE    ////////////" << std::endl;
   std::cout << "//////////////////////////////////////////////////" << std::endl;
   std::cout << std::endl;
 
-  for (size_t i = 1; i < joueurs.size(); ++i) { // Commence à 1 pour exclure le croupier
-      int mise;
-      mise = 0;
 
-
-      if(strcmp(joueurs[i].type_joueur, "humain") == 1 ) {joueurs[i].jeton_mise = 10; mise = 10;}   //mise bot
-
-      while (mise < 10 || mise > 100)
-      {
-          std::cout << "Joueur " << joueurs[i].nom << ", entrez votre mise (entre 10 et 100 jetons) : ";
-          std::cin >> mise;
-          if (mise < 10 || mise > 100) {
-              std::cout << "Mise non valide. Veuillez miser entre 10 et 100 jetons." << std::endl;
-          }
-      }
-
-      joueurs[i].jeton_mise = mise;
+  for (size_t i = 1; i < joueurs.size(); ++i) {
+      const auto& joueur = joueurs[i];
+      std::cout << "Joueur " << joueur.nom << " possède " << joueur.jeton_possede << " jetons." << std::endl;
   }
 
+  std::cout << std::endl;
+
+  srand(static_cast<unsigned int>(time(nullptr)));
+
+  for (size_t i = 1; i < joueurs.size(); ++i) { // Commence à 1 pour exclure le croupier
+      if(strcmp(joueurs[i].type_joueur, "humain") != 0) { // Si le joueur n'est pas humain
+          // Assigner une mise aléatoire entre 10 et 100
+          joueurs[i].jeton_mise = rand() % 91 + 10; // % 91 assure une plage de 0-90, + 10 décale à 10-100
+      } else {
+          // Demander la mise pour les joueurs humains
+          do {
+              std::cout << "Joueur " << joueurs[i].nom << ", entrez votre mise (entre 10 et 100 jetons) : ";
+              std::cin >> joueurs[i].jeton_mise;
+              if (joueurs[i].jeton_mise < 10 || joueurs[i].jeton_mise > 100) {
+                  std::cout << "Mise non valide. Veuillez miser entre 10 et 100 jetons." << std::endl;
+              }
+          } while (joueurs[i].jeton_mise < 10 || joueurs[i].jeton_mise > 100);
+      }
+  }
+
+  // Afficher la mise de tous les joueurs (sauf le croupier)
+  for (size_t i = 1; i < joueurs.size(); ++i) {
+      std::cout << "Joueur " << joueurs[i].nom << " a misé " << joueurs[i].jeton_mise << " jetons." << std::endl;
+  }
 
 
 
@@ -487,7 +565,8 @@ BoucleDeJeu(joueurs);
   std::cout << "//////////////////////////////////////////////////" << std::endl;
   std::cout << std::endl;
 
-  for (const auto& joueur : joueurs) {
+  for (size_t i = 1; i < joueurs.size(); ++i) {
+      const auto& joueur = joueurs[i];
       std::cout << "Joueur " << joueur.nom << " possède " << joueur.jeton_possede << " jetons." << std::endl;
   }
 
@@ -498,11 +577,26 @@ BoucleDeJeu(joueurs);
 
 
 
-
   // Après toutes les manipulations des cartes
-      Ranger_Cartes(joueurs);
+
+  std::cout << std::endl;
+  std::cout << "//////////////////////////////////////////////////" << std::endl;
+  std::cout << "/////////////////    FIN DE ROUND "<<N_Manche_Actuelle << "    ////////////" << std::endl;
+  std::cout << "//////////////////////////////////////////////////" << std::endl;
+  std::cout << std::endl;
+
+  // Reset le choix de l'humain de ne plus piocher de carte
+  for (auto& joueur : joueurs) {
+      if (auto h = dynamic_cast<humain*>(&joueur)) {
+          h->flag_repondu_non = 0; // Réinitialiser le flag pour le joueur humain
+      }
+  }
 
 
+  Ranger_Cartes(joueurs);
+
+
+}
 
 //  int NB_Cartes_a_retirer;
 //    std::cout << "Entrez le nombre de cartes a retirer : ";

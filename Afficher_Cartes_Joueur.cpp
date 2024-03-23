@@ -19,7 +19,7 @@ void Afficher_Cartes_Joueur(const Joueur& joueur, size_t numeroDuJoueur)
             }
             else
             {
-                std::cout << "X "; // Remplace les autres cartes par "X"
+                std::cout << "# "; // Remplace les autres cartes par "X"
             }
         }
     }

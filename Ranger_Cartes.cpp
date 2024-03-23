@@ -48,5 +48,10 @@ void Ranger_Cartes(std::vector<Joueur>& joueurs)
     }
 
     fileOut.close(); // Ferme le fichier après avoir terminé l'écriture.
-    std::cout << "Cartes rangées avec succès dans le sabot." << std::endl; // Confirme que l'opération s'est bien déroulée.
+
+    // Itérer sur tous les joueurs et supprimer leurs cartes
+    for (Joueur& joueur : joueurs)
+    {
+      joueur.cartes.clear(); // Vide le vecteur de cartes pour chaque joueur
+    }
 }
