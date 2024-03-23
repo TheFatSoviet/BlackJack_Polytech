@@ -4,7 +4,7 @@
 using namespace std;
 
 class gain{
-
+public:
   int calcul_gain(int score_j,int score_c,int jeton, int mise)
   {
 
