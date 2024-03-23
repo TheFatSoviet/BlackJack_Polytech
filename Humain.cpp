@@ -5,13 +5,10 @@ using namespace std;
 
 class humain{
 public:
-    int flag_repondu_non;
     // Méthode pour demander à l'utilisateur s'il souhaite tirer une carte.
     bool pioche_humain(int score) {
         char oui_non; // Variable pour stocker la réponse de l'utilisateur.
-            if (flag_repondu_non == 1){
-              return false;
-            }
+
             if (score >= 21){
               return false;
             }
@@ -20,7 +17,6 @@ public:
             if (oui_non == 'o') {
                 return true; // Retourne vrai si l'utilisateur veut tirer une carte.
             } else if (oui_non == 'n') {
-              flag_repondu_non = 1;
                 return false; // Retourne faux si l'utilisateur ne veut pas tirer de carte.
             } else {
                 cout << "Entrée invalide. Veuillez répondre par 'o' ou 'n'." << endl;
