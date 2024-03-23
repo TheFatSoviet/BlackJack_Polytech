@@ -1,11 +1,10 @@
+#include "Retire_Cartes.h"
 #include <fstream>
 #include <iostream>
 #include <sstream>
 #include <string>
 #include <vector>
 #include "Joueur.h"
-#include "Retire_Cartes.h"
-
 
 void Retire_Cartes(Joueur & joueur) {
   std::ifstream fileIn("Sabot.txt");
