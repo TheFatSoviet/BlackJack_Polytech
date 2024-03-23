@@ -265,7 +265,7 @@ int main()
   for (int i = 1; i <= Nombre_Joueurs; ++i) { // Exclure le croupier de la saisie
       std::string typeTemp;
       bool typeValide;
-  
+
       do {
           std::cout << "Entrez le type pour le joueur " << i << " (humain, ret3, rand1, tir16, magic): ";
           std::getline(std::cin, typeTemp);
@@ -296,6 +296,14 @@ int main()
 
 
 
+  // Initialiser les jetons pour tous les joueurs
+  for (int i = 0; i <= Nombre_Joueurs; ++i) { // Commence à 0 pour inclure le croupier
+      if (i == 0) { // Le croupier est le joueur à l'indice 0
+          joueurs[i].jeton_possede = 100000000; // 100 millions pour le croupier
+      } else {
+          joueurs[i].jeton_possede = 1000; // 1000 jetons pour les joueurs
+      }
+  }
 
 
 
