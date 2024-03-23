@@ -12,7 +12,7 @@ int Melange_Cartes(char value)
         return 0; // Si la valeur n'est pas entre 1 et 8, renvoyer 0
 
     // Création d'un jeu de cartes
-    std::vector<char> Sabot_Type = {'1', '2', '3', '4', '5', '6', '7', '8', '9', 'X' ,'V', 'D', 'R'};
+    std::vector<char> Sabot_Type = {'1', '2', '3', '4', '5', '6', '7', '8', '9', 'V', 'D', 'R'};
     std::vector<char> Cartes;
 
     // Multiplication du jeu de cartes par le nombre de joueurs
