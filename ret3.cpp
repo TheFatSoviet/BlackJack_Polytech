@@ -11,7 +11,7 @@ bool pioche_ret3(int score)
     if(score >= 21){
       return false;
     }
-    if (i<1)
+    if (i<3)
     {
       i=i+1;
       return true;
